@@ -1,0 +1,180 @@
+src/
+└── app/
+    │
+    ├── core/                                # Singleton, app-wide services
+    │   ├── services/
+    │   │   ├── auth.service.ts
+    │   │   ├── api.service.ts
+    │   │   ├── token.service.ts
+    │   │   └── logger.service.ts
+    │   ├── guards/
+    │   │   ├── auth.guard.ts
+    │   ├── interceptors/
+    │   │   ├── auth.interceptor.ts
+    │   │   └── error.interceptor.ts
+    │   ├── layout/                          # shell layout
+    │   │   ├── header/
+    │   │   ├── footer/
+    │   │   └── side-menu/
+    │   └── core.config.ts
+    │
+    ├── shared/                              # Reusable components (not business-specific)
+    │   ├── components/
+    │   │   ├── button/
+    │   │   ├── modal/
+    │   │   ├── pagination/
+    │   │   └── loader/
+    │   ├── directives/
+    │   ├── pipes/
+    │   ├── utils/
+    │   └── shared.module.ts (optional if not standalone)
+    │
+    ├── features/                             # Lazy-loaded domain features
+    │   ├── auth/
+    │   │   ├── login/
+    │   │   ├── register/
+    │   │   ├── auth.routes.ts
+    │   │   └── auth.service.ts
+    │   │
+    │   ├── products/
+    │   │   ├── pages/
+    │   │   │   ├── product-list/
+    │   │   │   ├── product-details/
+    │   │   ├── components/
+    │   │   │   ├── product-card/
+    │   │   │   └── product-filter/
+    │   │   ├── services/
+    │   │   │   ├── product.service.ts
+    │   │   ├── state/ (optional NgRx/Signals)
+    │   │   └── product.routes.ts
+    │   │
+    │   ├── cart/
+    │   │   ├── pages/
+    │   │   ├── components/
+    │   │   ├── services/
+    │   │   │   └── cart.service.ts
+    │   │   ├── state/
+    │   │   └── cart.routes.ts
+    │   │
+    │   ├── orders/
+    │   │   ├── pages/
+    │   │   ├── components/
+    │   │   ├── services/
+    │   │   ├── state/
+    │   │   └── orders.routes.ts
+    │   │
+    │   ├── profile/
+    │   ├── wishlist/
+    │   └── admin/                            # admin panel separated
+    │
+    ├── models/                               # All Interfaces & Types
+    │   ├── product.model.ts
+    │   ├── cart.model.ts
+    │   ├── order.model.ts
+    │   ├── user.model.ts
+    │   └── api-response.model.ts
+    │
+    ├── state/ (Global state, optional)
+    │   ├── app.store.ts
+    │   └── app.actions.ts
+    │
+    ├── app.routes.ts                         # Main routes (lazy-loading feature routes)
+    └── app.component.ts
+
+-----------------------------------commands----------------------
+# --- SHARED COMPONENTS ---
+ng g c shared/components/button --standalone
+ng g c shared/components/modal --standalone
+ng g c shared/components/pagination --standalone
+ng g c shared/components/loader --standalone
+
+# --- SHARED DIRECTIVES ---
+ng g d shared/directives/myDirective
+
+# --- SHARED PIPES ---
+ng g p shared/pipes/myPipe
+
+# --- SHARED UTILS ---
+ng g class shared/utils/helpers
+
+# --- SHARED MODULE (Optional, remove if using only standalone) ---
+ng g m shared/shared
+
+# ====================================================
+# ===============  FEATURE: AUTH  =====================
+# ====================================================
+ng g c features/auth/login --standalone
+ng g c features/auth/register --standalone
+ng g s features/auth/auth
+
+# Create auth.routes.ts manually
+mkdir -p src/app/features/auth
+echo "// auth routes" > src/app/features/auth/auth.routes.ts
+
+# ====================================================
+# =============  FEATURE: PRODUCTS  ==================
+# ====================================================
+ng g c features/products/pages/product-list --standalone
+ng g c features/products/pages/product-details --standalone
+
+ng g c features/products/components/product-card --standalone
+ng g c features/products/components/product-filter --standalone
+
+ng g s features/products/services/product
+
+# Create product.routes.ts manually
+mkdir -p src/app/features/products
+echo "// product routes" > src/app/features/products/product.routes.ts
+
+# ====================================================
+# =================  FEATURE: CART  ==================
+# ====================================================
+ng g c features/cart/pages/cart-page --standalone
+ng g c features/cart/components/cart-item --standalone
+ng g s features/cart/services/cart
+
+# Create cart.routes.ts manually
+mkdir -p src/app/features/cart
+echo "// cart routes" > src/app/features/cart/cart.routes.ts
+
+# ====================================================
+# =================  FEATURE: ORDERS  =================
+# ====================================================
+ng g c features/orders/pages/order-list --standalone
+ng g c features/orders/components/order-card --standalone
+ng g s features/orders/services/orders
+
+# Create orders.routes.ts manually
+mkdir -p src/app/features/orders
+echo "// orders routes" > src/app/features/orders/orders.routes.ts
+
+# ====================================================
+# ================  FEATURE: PROFILE  =================
+# ====================================================
+ng g c features/profile/pages/profile --standalone
+
+# ====================================================
+# ================ FEATURE: WISHLIST ==================
+# ====================================================
+ng g c features/wishlist/pages/wishlist --standalone
+
+# ====================================================
+# ================== FEATURE: ADMIN ===================
+# ====================================================
+ng g c features/admin/pages/dashboard --standalone
+ng g c features/admin/components/admin-card --standalone
+
+# ====================================================
+# ================  MODELS (Interfaces) ===============
+# ====================================================
+ng g interface models/product --type=model
+ng g interface models/cart --type=model
+ng g interface models/order --type=model
+ng g interface models/user --type=model
+ng g interface models/api-response --type=model
+
+# ====================================================
+# ================ GLOBAL STATE (Optional) ============
+# ====================================================
+ng g class state/app.store
+ng g class state/app.actions
