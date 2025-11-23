@@ -1,0 +1,30 @@
+.category-head h5 {
+  font-weight: 700;
+}
+
+.row-scroll {
+  overflow: hidden;
+}
+
+.row-scroll-inner {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+  }
+}
+
+.card-cell {
+  min-width: 220px;
+  width: 220px;
+  flex: 0 0 auto;
+}

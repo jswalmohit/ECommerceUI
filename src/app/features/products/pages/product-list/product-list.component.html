@@ -1,1 +1,12 @@
-<p>product-list works!</p>
+<ul>
+  <li *ngFor="let product of products">
+ <app-product-card
+          [title]="product.title"
+          [imageUrl]="product.imageUrl"
+          [offer]="product.offer"
+          [price]="product.price"
+          (clicked)="onClick(product)"
+        ></app-product-card>
+    {{ product.title }} - {{ product.price }}
+  </li>
+</ul>

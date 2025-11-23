@@ -26,6 +26,6 @@ export class LogoutComponent {
   logout() {    
     this.auth.logout();
     this.toast.showSuccess('You have been logged out');
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 }
