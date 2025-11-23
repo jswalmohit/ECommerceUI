@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,6 @@ export class AuthService {
 
   private http = inject(HttpClient);
   private readonly TOKEN_KEY = 'user_token';
-  private readonly BASE_URL = 'https://ecommerceapp-m981.onrender.com';
-  private readonly API_URL = this.BASE_URL + '/api/Auth/token';
 
   constructor() {}
 
@@ -19,7 +18,7 @@ login(uId: string, password: string) {
       'CorrelationId': crypto.randomUUID()
     });
   return this.http.post<{ token: string }>(
-    `${this.API_URL}`,
+    `${environment.apiBaseUrl}/api/Auth/token`,
     { loginId : uId, password },
     { headers: headers }
   ).pipe(
@@ -34,7 +33,7 @@ login(uId: string, password: string) {
        const headers = new HttpHeaders({
       'CorrelationId': crypto.randomUUID()
     });
-    return this.http.post(`${this.BASE_URL}/api/Register/create`, model, { headers: headers });
+    return this.http.post(`${environment.apiBaseUrl}/api/Register/create`, model, { headers: headers });
   }
 
   logout() {

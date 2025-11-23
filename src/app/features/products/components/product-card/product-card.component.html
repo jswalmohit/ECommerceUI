@@ -1,1 +1,16 @@
-<p>product-card works!</p>
+<div class="pcard" (click)="onCardClick()">
+
+  <div class="pcard-img-wrap">
+    <img [src]="imageUrl" [alt]="title" class="pcard-img" />
+  </div>
+
+  <div class="pcard-body">
+    <h6 class="pcard-title" title="{{ title }}">{{ title }}</h6>
+
+    <div class="pcard-meta">
+      <span class="pcard-offer" *ngIf="offer">{{ offer }}</span>
+      <span class="pcard-price" *ngIf="price">{{ price }}</span>
+    </div>
+  </div>
+
+</div>
