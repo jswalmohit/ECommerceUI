@@ -16,7 +16,7 @@ export class AuthService {
 
 login(uId: string, password: string) {
     const headers = new HttpHeaders({
-      'CorrelationId': crypto.randomUUID();
+      'CorrelationId': crypto.randomUUID()
     });
   return this.http.post<{ token: string }>(
     `${this.API_URL}`,
