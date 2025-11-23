@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private toast: ToastService
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -33,8 +35,10 @@ export class LoginComponent {
 
     if (this.auth.login(email!, password!)) {
       this.auth.login(email!, password!).subscribe(() => {
+        this.toast.showSuccess('Login successful!');
         this.router.navigate(['/products']);
       });
     }
+    this.toast.showError('Login failed. Please check your credentials.');
   }
 }
