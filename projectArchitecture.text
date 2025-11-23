@@ -39,6 +39,7 @@ src/
     ├── features/                             # Lazy-loaded domain features
     │   ├── auth/
     │   │   ├── login/
+    │   │   ├── logout/
     │   │   ├── register/
     │   │   ├── auth.routes.ts
     │   │   └── auth.service.ts

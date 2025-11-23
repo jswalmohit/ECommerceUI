@@ -33,8 +33,9 @@ login(uId: string, password: string) {
   );
 }
 
-  register(model: { name: string; email: string; password: string }) {
-    return this.http.post(`${this.API_URL}/register`, model);
+  register(model: any) {
+    // post to the register endpoint with the expected payload shape
+    return this.http.post(`${this.BASE_URL}/api/Auth/register`, model);
   }
 
   logout() {
