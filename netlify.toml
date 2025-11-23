@@ -1,6 +1,10 @@
 [build]
   command = "npm run build"
+<<<<<<< HEAD
   publish = "dist/ecommerce-ui"
+=======
+  publish = "dist/ecommerce-ui/browser"
+>>>>>>> 4abf458975dba7b0da5e5ae8638d148cde5767d3
 
 [[redirects]]
   from = "/*"
