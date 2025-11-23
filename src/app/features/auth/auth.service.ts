@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -15,27 +15,26 @@ export class AuthService {
   constructor() {}
 
 login(uId: string, password: string) {
-  const correlationId = crypto.randomUUID();
-
-  const headers = {
-    'CorrelationId': correlationId
-  };
-
+    const headers = new HttpHeaders({
+      'CorrelationId': crypto.randomUUID();
+    });
   return this.http.post<{ token: string }>(
     `${this.API_URL}`,
     { loginId : uId, password },
-    { headers }
+    { headers: headers }
   ).pipe(
     tap(res => {
       localStorage.setItem(this.TOKEN_KEY, res.token);
-      localStorage.setItem('correlation_id', correlationId); 
+      localStorage.setItem('correlation_id', headers.get('CorrelationId')!); 
     })
   );
 }
 
   register(model: any) {
-    // post to the register endpoint with the expected payload shape
-    return this.http.post(`${this.BASE_URL}/api/Auth/register`, model);
+       const headers = new HttpHeaders({
+      'CorrelationId': crypto.randomUUID()
+    });
+    return this.http.post(`${this.BASE_URL}/api/Register/create`, model, { headers: headers });
   }
 
   logout() {
