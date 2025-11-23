@@ -5,6 +5,7 @@ export const routes: Routes = [
   { path: 'products', loadComponent: () => import('./features/products/pages/product-list/product-list.component').then(m => m.ProductListComponent) },
   { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent) },
   { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent) },
+  { path: 'logout', loadComponent: () => import('./features/auth/logout/logout.component').then(m => m.LogoutComponent) },
   { path: 'cart', loadComponent: () => import('./features/cart/pages/cart-page/cart-page.component').then(m => m.CartPageComponent) },
   { path: '**', redirectTo: '' }
 ];

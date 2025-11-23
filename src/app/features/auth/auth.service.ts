@@ -1,28 +1,52 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly KEY = 'ecommerceui_auth_user';
+
+  private http = inject(HttpClient);
+  private readonly TOKEN_KEY = 'user_token';
+  private readonly BASE_URL = 'https://ecommerceapp-m981.onrender.com';
+  private readonly API_URL = this.BASE_URL + '/api/Auth/token';
 
   constructor() {}
 
-  login(email: string, password: string) {
-    const u = localStorage.getItem(this.KEY);
-    if (u) {
-      try {
-        const user = JSON.parse(u) as { email: string; password: string };
-        return user.email === email && user.password === password;
-      } catch {
-        return false;
-      }
-    }
-    return false;
+login(uId: string, password: string) {
+  const correlationId = crypto.randomUUID();
+
+  const headers = {
+    'CorrelationId': correlationId
+  };
+
+  return this.http.post<{ token: string }>(
+    `${this.API_URL}`,
+    { loginId : uId, password },
+    { headers }
+  ).pipe(
+    tap(res => {
+      localStorage.setItem(this.TOKEN_KEY, res.token);
+      localStorage.setItem('correlation_id', correlationId); 
+    })
+  );
+}
+
+  register(model: any) {
+    // post to the register endpoint with the expected payload shape
+    return this.http.post(`${this.BASE_URL}/api/Auth/register`, model);
   }
 
-  register(model: { name: string; email: string; password: string }) {
-    localStorage.setItem(this.KEY, JSON.stringify(model));
-    return true;
+  logout() {
+    localStorage.removeItem(this.TOKEN_KEY);
+  }
+
+  get token(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(this.TOKEN_KEY);
   }
 }

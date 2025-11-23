@@ -3,13 +3,16 @@ src/
     │
     ├── core/                                # Singleton, app-wide services
     │   ├── services/
+    │   │   ├── loading.service.ts
     │   │   ├── auth.service.ts
     │   │   ├── api.service.ts
     │   │   ├── token.service.ts
+    │   │   ├── toast.service.ts
     │   │   └── logger.service.ts
     │   ├── guards/
     │   │   ├── auth.guard.ts
     │   ├── interceptors/
+    │   │   ├── loading.interceptor.ts
     │   │   ├── auth.interceptor.ts
     │   │   └── error.interceptor.ts
     │   ├── layout/                          # shell layout
@@ -20,9 +23,13 @@ src/
     │
     ├── shared/                              # Reusable components (not business-specific)
     │   ├── components/
+    │   │   ├── loader/
+    │   │   |   ├── loader.component.ts 
+    │   │   |   └── loader.component.scss
     │   │   ├── button/
     │   │   ├── modal/
     │   │   ├── pagination/
+    │   │   ├── toast/
     │   │   └── loader/
     │   ├── directives/
     │   ├── pipes/
@@ -32,6 +39,7 @@ src/
     ├── features/                             # Lazy-loaded domain features
     │   ├── auth/
     │   │   ├── login/
+    │   │   ├── logout/
     │   │   ├── register/
     │   │   ├── auth.routes.ts
     │   │   └── auth.service.ts
