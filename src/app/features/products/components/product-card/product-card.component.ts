@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-card',
@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   standalone: true,
   imports: [CommonModule]
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit {
 
   @Input() title = '';
   @Input() imageUrl = '';
@@ -17,7 +17,20 @@ export class ProductCardComponent {
 
   @Output() clicked = new EventEmitter<void>();
 
+  ngOnInit() {
+  }
+  
   onCardClick() {
     this.clicked.emit();
+  }
+
+  // fallback image for broken or missing URLs
+  fallbackUrl = 'https://ik.imagekit.io/rkmart/RKMART/PRODUCTS/105.webp';
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    if (img && this.fallbackUrl) {
+      img.src = this.fallbackUrl;
+    }
   }
 }

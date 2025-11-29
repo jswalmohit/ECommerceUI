@@ -1,11 +1,11 @@
 <div class="pcard" (click)="onCardClick()">
 
   <div class="pcard-img-wrap">
-    <img [src]="imageUrl" [alt]="title" class="pcard-img" />
+    <img [src]="imageUrl" [alt]="title || 'Product image'" class="pcard-img" (error)="onImgError($event)" />
   </div>
 
   <div class="pcard-body">
-    <h6 class="pcard-title" title="{{ title }}">{{ title }}</h6>
+    <h6 class="pcard-title" [title]="title">{{ title }}</h6>
 
     <div class="pcard-meta">
       <span class="pcard-offer" *ngIf="offer">{{ offer }}</span>

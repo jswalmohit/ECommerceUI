@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { ProductRowComponent } from '../product-row/product-row.component';
 import { Product } from '../../../../models/product.model';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -24,9 +25,18 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe(products => {
       this.products = products;
-      this.groupedProducts = this.groupByCategory(products);
+      // ensure each product has an imageUrl built from environment if missing
+      this.buildImageUrl(this.products);
+      this.groupedProducts = this.groupByCategory(this.products);
       this.categories = Object.keys(this.groupedProducts);
     });
+  }
+
+  buildImageUrl(products: Product[]) {
+     this.products = products.map(p => ({
+        ...p,
+        imageUrl:  `${environment.imageBaseUrl}/${p.productId ?? p.title}.webp`
+      }));
   }
 
   groupByCategory(products: Product[]): { [category: string]: Product[] } {
