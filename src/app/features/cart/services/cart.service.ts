@@ -1,9 +1,27 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor() { }
+  private apiBaseUrl = environment.apiBaseUrl;
+
+  constructor(private http: HttpClient) { }
+
+  addToCart(productId: string): Observable<any> {
+    const url = `${this.apiBaseUrl}/api/cart`;
+    const headers = new HttpHeaders({
+      'X-Correlation-Id': this.generateCorrelationId()
+    });
+
+    return this.http.post<any>(url, { productId }, { headers });
+  }
+
+  private generateCorrelationId(): string {
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
 }
