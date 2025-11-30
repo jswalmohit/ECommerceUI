@@ -9,6 +9,7 @@
     <div class="row-scroll-inner">
       <div class="card-cell" *ngFor="let p of products">
         <app-product-card
+          [product]="p"
           [title]="p.title"
           [imageUrl]="p.imageUrl"
           [offer]="p.offer"
@@ -23,6 +24,7 @@
   <div class="row g-3 d-md-none">
     <div class="col-6" *ngFor="let p of products">
       <app-product-card
+        [product]="p"
         [title]="p.title"
         [imageUrl]="p.imageUrl"
         [offer]="p.offer"

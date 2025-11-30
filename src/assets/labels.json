@@ -1,0 +1,57 @@
+{
+  "navigation": {
+    "brand": "ECommerceUI",
+    "products": "Products",
+    "cart": "Cart",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register"
+  },
+  "footer": {
+    "copyright": "© 2025 ECommerceUI"
+  },
+  "forms": {
+    "login": {
+      "title": "Login",
+      "userIdLabel": "UserId or Email",
+      "passwordLabel": "Password",
+      "submitButton": "Login"
+    },
+    "register": {
+      "title": "Register",
+      "loginIdLabel": "Login Id",
+      "fullNameLabel": "Full Name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submitButton": "Register"
+    }
+  },
+  "validation": {
+    "userIdRequired": "UserId or Email is required.",
+    "invalidEmail": "Invalid email.",
+    "passwordRequired": "Password is required."
+  },
+  "messages": {
+    "login": {
+      "success": "Login successful!",
+      "error": "Login failed. Please check your credentials."
+    },
+    "register": {
+      "success": "Registration successful. Please login.",
+      "error": "Registration failed. Please try again."
+    },
+    "logout": {
+      "success": "You have been logged out"
+    }
+  },
+  "pages": {
+    "logout": {
+      "title": "Logout",
+      "description": "Click the button below to end your session.",
+      "button": "Logout"
+    }
+  },
+  "images": {
+    "productAlt": "Product image"
+  }
+}
