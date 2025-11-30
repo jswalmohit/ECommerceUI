@@ -8,14 +8,13 @@ import { environment } from '../../../../environments/environment';
 })
 export class CartService {
 
-  private apiBaseUrl = environment.apiBaseUrl;
-
   constructor(private http: HttpClient) { }
 
   addToCart(productId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}/api/cart`;
+    const url = `${environment.apiBaseUrl}/api/Cart/add`;
     const headers = new HttpHeaders({
-      'X-Correlation-Id': this.generateCorrelationId()
+      'CorrelationId': this.generateCorrelationId(),
+      'AuthToken': `Bearer ${localStorage.getItem('user_token') || ''}`
     });
 
     return this.http.post<any>(url, { productId }, { headers });
