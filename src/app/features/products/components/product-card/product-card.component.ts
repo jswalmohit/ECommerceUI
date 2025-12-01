@@ -13,31 +13,16 @@ import { Product } from '../../../../models/product.model';
   imports: [CommonModule]
 })
 export class ProductCardComponent implements OnInit {
-export class ProductCardComponent implements OnInit {
 
   @Input() title = '';
   @Input() imageUrl = '';
   @Input() offer?: string;
   @Input() price?: string;
   @Input() product?: Product;
-  @Input() product?: Product;
 
   @Output() clicked = new EventEmitter<void>();
 
   isAddingToCart = false;
-
-  constructor(
-    private cartService: CartService,
-    private authService: AuthService,
-    private toastService: ToastService
-  ) {}
-
-  ngOnInit() {
-  }
-  
-
-  isAddingToCart = false;
-
   constructor(
     private cartService: CartService,
     private authService: AuthService,
