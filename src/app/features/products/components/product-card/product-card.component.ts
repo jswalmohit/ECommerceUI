@@ -52,7 +52,7 @@ export class ProductCardComponent implements OnInit {
 
     this.isAddingToCart = true;
 
-    this.cartService.addToCart(this.product.productId).subscribe({
+    this.cartService.addToCart(this.product.productId, 1).subscribe({
       next: () => {
         this.toastService.showSuccess('Added to bag');
         this.isAddingToCart = false;

@@ -14,14 +14,17 @@ export class CartService {
   /**
    * Add a product to cart
    * JWT token will be automatically added by authInterceptor
+   * @param productId - The ID of the product to add
+   * @param quantity - The quantity of the product to add
    */
-  addToCart(productId: string): Observable<any> {
+  addToCart(productId: string, quantity: number): Observable<any> {
     const url = `${environment.apiBaseUrl}/api/Cart/add`;
     const headers = new HttpHeaders({
-      'CorrelationId': this.generateCorrelationId()
+      'CorrelationId': this.generateCorrelationId(),
+      'AuthToken': this.tokenService.getToken() || ''
     });
 
-    return this.http.post<any>(url, { productId }, { headers });
+    return this.http.post<any>(url, { productId, quantity }, { headers });
   }
 
   /**
