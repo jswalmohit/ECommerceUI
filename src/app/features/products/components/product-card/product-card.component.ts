@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CartService } from '../../../cart/services/cart.service';
 import { AuthService } from '../../../auth/auth.service';
-import { ToastService } from '../../../../core/services/toast.service';
+// ToastService removed
 import { Product } from '../../../../models/product.model';
 
 @Component({
@@ -25,8 +25,7 @@ export class ProductCardComponent implements OnInit {
   isAddingToCart = false;
   constructor(
     private cartService: CartService,
-    private authService: AuthService,
-    private toastService: ToastService
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -40,12 +39,12 @@ export class ProductCardComponent implements OnInit {
     event.stopPropagation();
 
     if (!this.authService.isLoggedIn()) {
-      this.toastService.showError('Please login to add items to cart');
+      // Toast removed: user not logged in
       return;
     }
 
     if (!this.product?.productId) {
-      this.toastService.showError('Unable to add product to cart');
+      // Toast removed: invalid product
       return;
     }
 
@@ -53,12 +52,12 @@ export class ProductCardComponent implements OnInit {
 
     this.cartService.addToCart(this.product.productId, 1).subscribe({
       next: () => {
-        this.toastService.showSuccess('Added to bag');
+        // Toast removed: added to bag
         this.isAddingToCart = false;
       },
       error: (err) => {
         console.error('Error adding to cart:', err);
-        this.toastService.showError('Failed to add to bag');
+        // Toast removed: failed to add to bag
         this.isAddingToCart = false;
       }
     });

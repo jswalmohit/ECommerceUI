@@ -1,32 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
+/**
+ * ToastService intentionally left as no-op to remove UI toasts globally.
+ * Methods remain to avoid breaking imports in other modules.
+ */
 export interface ToastMessage {
   message: string;
   type: 'success' | 'error' | 'info' | 'warning';
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ToastService {
+  // No-op observable placeholder for compatibility
+  toast$ = null as any;
 
-  private _toast$ = new BehaviorSubject<ToastMessage | null>(null);
-  toast$ = this._toast$.asObservable();
-
-  showError(message: string) {
-    this._show(message, 'error');
+  showError(_message: string) {
+    // intentionally no-op
   }
 
-  showSuccess(message: string) {
-    this._show(message, 'success');
-  }
-
-  private _show(message: string, type: ToastMessage['type']) {
-    this._toast$.next({ message, type });
-
-    setTimeout(() => {
-      this._toast$.next(null);   // auto-hide after 3 sec
-    }, 3000);
+  showSuccess(_message: string) {
+    // intentionally no-op
   }
 }

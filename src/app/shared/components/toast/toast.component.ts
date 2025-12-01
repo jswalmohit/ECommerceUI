@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ToastService } from '../../../core/services/toast.service';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-toast',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div *ngIf="toast$ | async as toast"
+    <div *ngIf="toast"
          class="toast"
          [class.error]="toast.type === 'error'"
          [class.success]="toast.type === 'success'">
@@ -46,13 +43,4 @@ styles: [`
 `]
 
 })
-export class ToastComponent implements OnInit {
-
-  toast$!: Observable<any>;
-
-  constructor(private toastService: ToastService) {}
-
-  ngOnInit(): void {
-    this.toast$ = this.toastService.toast$;
-  }
-}
+export class ToastComponent {}
