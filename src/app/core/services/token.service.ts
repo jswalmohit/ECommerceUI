@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class TokenService {
    * Set the JWT token
    */
   setToken(token: string): void {
-    return this.setLocalStorageWithExpiry(this.TOKEN_KEY, token,1);
+    return this.setLocalStorageWithExpiry(this.TOKEN_KEY, token,environment.tokenExpirationMinutes);
   }
 
   /**
