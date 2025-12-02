@@ -1,32 +1,40 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface ToastMessage {
   message: string;
   type: 'success' | 'error' | 'info' | 'warning';
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ToastService {
+  private toastSubject = new BehaviorSubject<ToastMessage | null>(null);
+  public toast$: Observable<ToastMessage | null> = this.toastSubject.asObservable();
 
-  private _toast$ = new BehaviorSubject<ToastMessage | null>(null);
-  toast$ = this._toast$.asObservable();
-
-  showError(message: string) {
-    this._show(message, 'error');
+  showError(message: string): void {
+    this.showToast(message, 'error');
   }
 
-  showSuccess(message: string) {
-    this._show(message, 'success');
+  showSuccess(message: string): void {
+    this.showToast(message, 'success');
   }
 
-  private _show(message: string, type: ToastMessage['type']) {
-    this._toast$.next({ message, type });
+  showInfo(message: string): void {
+    this.showToast(message, 'info');
+  }
 
+  showWarning(message: string): void {
+    this.showToast(message, 'warning');
+  }
+
+  private showToast(message: string, type: 'success' | 'error' | 'info' | 'warning'): void {
+    console.log('Toast shown:', { message, type });
+    this.toastSubject.next({ message, type });
+    // Auto-dismiss after 3500ms to allow animation to complete
     setTimeout(() => {
-      this._toast$.next(null);   // auto-hide after 3 sec
-    }, 3000);
+      console.log('Toast dismissed');
+      this.toastSubject.next(null);
+    }, 3500);
   }
 }
+

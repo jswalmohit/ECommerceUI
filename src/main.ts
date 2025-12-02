@@ -5,12 +5,12 @@ import { importProvidersFrom } from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
-import { loadingInterceptor } from './app/core/interceptors/loading.interceptor';
+import { authInterceptor, loadingInterceptor } from './app/core/interceptors/loading.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(
-      withInterceptors([loadingInterceptor])
+      withInterceptors([loadingInterceptor,authInterceptor])
     ),
     provideRouter(routes)
   ]

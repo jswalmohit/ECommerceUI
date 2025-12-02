@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { ToastService } from '../../../core/services/toast.service';
+// ToastService removed
 import { RegisterModel } from '../../../models/register.model';
 
 @Component({
@@ -29,8 +29,7 @@ export class RegisterComponent {
 
   constructor(
     private auth: AuthService,
-    private router: Router,
-    private toast: ToastService
+    private router: Router
   ) {}
 
   submit() {
@@ -45,12 +44,12 @@ export class RegisterComponent {
 
     this.auth.register(payload).subscribe({
       next: () => {
-        this.toast.showSuccess('Registration successful. Please login.');
+        // Toast removed: registration successful
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Registration failed', err);
-        this.toast.showError('Registration failed. Please try again.');
+        // Toast removed: registration failed
       }
     });
   }

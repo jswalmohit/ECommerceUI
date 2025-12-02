@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { TokenService } from '../../core/services/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
 
   private http = inject(HttpClient);
-  private readonly TOKEN_KEY = 'user_token';
+  private tokenService = inject(TokenService);
 
   constructor() {}
 
@@ -23,7 +24,7 @@ login(uId: string, password: string) {
     { headers: headers }
   ).pipe(
     tap(res => {
-      localStorage.setItem(this.TOKEN_KEY, res.token);
+      this.tokenService.setToken(res.token);
       localStorage.setItem('correlation_id', headers.get('CorrelationId')!); 
     })
   );
@@ -37,14 +38,14 @@ login(uId: string, password: string) {
   }
 
   logout() {
-    localStorage.removeItem(this.TOKEN_KEY);
+    this.tokenService.removeToken();
   }
 
   get token(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    return this.tokenService.getToken();
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem(this.TOKEN_KEY);
+    return this.tokenService.hasToken();
   }
 }

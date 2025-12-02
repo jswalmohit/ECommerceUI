@@ -5,17 +5,18 @@ import { AuthService } from '../../../features/auth/auth.service';
 import { NgIf } from '@angular/common';
 import { filter, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CartBadgeComponent } from '../cart-badge/cart-badge.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIf],
+  imports: [CommonModule, RouterLink, NgIf, CartBadgeComponent],
   template: `
     <header class="app-header navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" routerLink="/">ECommerceUI</a>
         <div class="ms-auto">
-          <a *ngIf="!isOnCart" class="btn btn-link" routerLink="/cart">Cart</a>
+          <app-cart-badge></app-cart-badge>
           <a *ngIf="isOnCart" class="btn btn-link" routerLink="/">Products</a>
           <a *ngIf="!isLoggedIn" class="btn btn-link" routerLink="/login">Login</a>
           <a *ngIf="isLoggedIn" class="btn btn-link" routerLink="/logout">Logout</a>

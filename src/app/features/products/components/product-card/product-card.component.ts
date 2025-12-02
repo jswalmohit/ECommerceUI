@@ -23,6 +23,7 @@ export class ProductCardComponent implements OnInit {
   @Output() clicked = new EventEmitter<void>();
 
   isAddingToCart = false;
+  private cartItemCount = 0;
 
   constructor(
     private cartService: CartService,
@@ -31,6 +32,10 @@ export class ProductCardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Subscribe to cart count to track current count
+    this.cartService.cartCount$.subscribe(count => {
+      this.cartItemCount = count;
+    });
   }
   
   onCardClick() {
@@ -41,25 +46,27 @@ export class ProductCardComponent implements OnInit {
     event.stopPropagation();
 
     if (!this.authService.isLoggedIn()) {
-      this.toastService.showError('Please login to add items to cart');
+      this.toastService.showInfo('Please log in to add items to cart');
       return;
     }
 
     if (!this.product?.productId) {
-      this.toastService.showError('Unable to add product to cart');
+      this.toastService.showError('Invalid product');
       return;
     }
 
     this.isAddingToCart = true;
 
-    this.cartService.addToCart(this.product.productId).subscribe({
+    this.cartService.addToCart(this.product.productId, 1).subscribe({
       next: () => {
-        this.toastService.showSuccess('Added to bag');
+        this.cartItemCount++;
+        this.cartService.updateCartCount(this.cartItemCount);
+        this.toastService.showSuccess('Added to cart successfully!');
         this.isAddingToCart = false;
       },
       error: (err) => {
         console.error('Error adding to cart:', err);
-        this.toastService.showError('Failed to add to bag');
+        this.toastService.showError('Failed to add item to cart');
         this.isAddingToCart = false;
       }
     });
@@ -75,3 +82,4 @@ export class ProductCardComponent implements OnInit {
     }
   }
 }
+

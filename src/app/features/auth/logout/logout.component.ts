@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-logout',
@@ -19,13 +18,12 @@ import { ToastService } from '../../../core/services/toast.service';
 export class LogoutComponent {
   constructor(
     private auth: AuthService,
-    private router: Router,
-    private toast: ToastService
+    private router: Router
   ) {}
 
   logout() {    
     this.auth.logout();
-    this.toast.showSuccess('You have been logged out');
+    // Toast removed: logged out
     this.router.navigate(['']);
   }
 }
