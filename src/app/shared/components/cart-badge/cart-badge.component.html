@@ -1,0 +1,7 @@
+<div class="bag-wrapper">
+  <a routerLink="/cart" class="bag-icon">
+    <i class="fas fa-shopping-bag"></i>
+    <span class="bag-text">Bag</span>
+    <span *ngIf="cartCount > 0" class="badge">{{ cartCount }}</span>
+  </a>
+</div>

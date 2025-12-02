@@ -1,0 +1,55 @@
+.bag-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.bag-icon {
+  position: relative;
+  cursor: pointer;
+  color: #000;
+  text-decoration: none;
+  font-size: 20px;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ff3f6c;
+  }
+}
+
+.bag-text {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff3f6c;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 12px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { TokenService } from '../../../core/services/token.service';
 
@@ -8,8 +8,12 @@ import { TokenService } from '../../../core/services/token.service';
   providedIn: 'root'
 })
 export class CartService {
+  private cartCountSubject = new BehaviorSubject<number>(0);
+  public cartCount$ = this.cartCountSubject.asObservable();
 
-  constructor(private http: HttpClient, private tokenService: TokenService) { }
+  constructor(private http: HttpClient, private tokenService: TokenService) {
+    this.loadCartCount();
+  }
 
   /**
    * Add a product to cart
@@ -66,7 +70,25 @@ export class CartService {
     return this.http.post<any>(url, {}, { headers });
   }
 
+  /**
+   * Update cart count
+   */
+  updateCartCount(count: number): void {
+    this.cartCountSubject.next(count);
+  }
+
+  /**
+   * Load cart count from local storage or API
+   */
+  private loadCartCount(): void {
+    const savedCount = localStorage.getItem('cartCount');
+    if (savedCount) {
+      this.cartCountSubject.next(parseInt(savedCount, 10));
+    }
+  }
+
   private generateCorrelationId(): string {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   }
 }
+

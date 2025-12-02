@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CartService } from '../../../cart/services/cart.service';
 import { AuthService } from '../../../auth/auth.service';
-// ToastService removed
+import { ToastService } from '../../../../core/services/toast.service';
 import { Product } from '../../../../models/product.model';
 
 @Component({
@@ -23,12 +23,19 @@ export class ProductCardComponent implements OnInit {
   @Output() clicked = new EventEmitter<void>();
 
   isAddingToCart = false;
+  private cartItemCount = 0;
+
   constructor(
     private cartService: CartService,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
+    // Subscribe to cart count to track current count
+    this.cartService.cartCount$.subscribe(count => {
+      this.cartItemCount = count;
+    });
   }
   
   onCardClick() {
@@ -39,12 +46,12 @@ export class ProductCardComponent implements OnInit {
     event.stopPropagation();
 
     if (!this.authService.isLoggedIn()) {
-      // Toast removed: user not logged in
+      this.toastService.showInfo('Please log in to add items to cart');
       return;
     }
 
     if (!this.product?.productId) {
-      // Toast removed: invalid product
+      this.toastService.showError('Invalid product');
       return;
     }
 
@@ -52,12 +59,14 @@ export class ProductCardComponent implements OnInit {
 
     this.cartService.addToCart(this.product.productId, 1).subscribe({
       next: () => {
-        // Toast removed: added to bag
+        this.cartItemCount++;
+        this.cartService.updateCartCount(this.cartItemCount);
+        this.toastService.showSuccess('Added to cart successfully!');
         this.isAddingToCart = false;
       },
       error: (err) => {
         console.error('Error adding to cart:', err);
-        // Toast removed: failed to add to bag
+        this.toastService.showError('Failed to add item to cart');
         this.isAddingToCart = false;
       }
     });
@@ -73,3 +82,4 @@ export class ProductCardComponent implements OnInit {
     }
   }
 }
+
