@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist/ecommerce-ui"
+  publish = "dist/ecommerce-ui/browser"
 
 [[redirects]]
   from = "/*"
