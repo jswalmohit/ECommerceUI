@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-cart-item',
   imports: [],
   templateUrl: './cart-item.component.html',
-  styleUrl: './cart-item.component.scss'
+  styleUrls: ['./cart-item.component.scss']
 })
 export class CartItemComponent {
 

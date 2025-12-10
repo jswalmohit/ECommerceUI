@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from "../../components/product-card/product-card.component";
 import { Product } from '../../../../models/product.model';
@@ -12,8 +12,10 @@ import { Product } from '../../../../models/product.model';
 export class ProductRowComponent {
   @Input() category!: string;
   @Input() products: Product[] = [];
+  @Output() productClicked = new EventEmitter<Product>();
 
   onClick(product: Product) {
-    console.log('Clicked:', product.title);
+    // emit the clicked product to parent components
+    this.productClicked.emit(product);
   }
 }

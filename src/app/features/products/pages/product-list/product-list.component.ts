@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product.service';
 import { ProductRowComponent } from '../product-row/product-row.component';
 import { Product } from '../../../../models/product.model';
 import { environment } from '../../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +12,7 @@ import { environment } from '../../../../../environments/environment';
   imports: [CommonModule, ProductRowComponent],
   template: `
     <div *ngFor="let category of categories">
-      <app-product-row [category]="category" [products]="groupedProducts[category]"></app-product-row>
+      <app-product-row [category]="category" [products]="groupedProducts[category]" (productClicked)="onClick($event)"></app-product-row>
     </div>
   `,
   styleUrls: ['./product-list.component.scss']
@@ -21,6 +22,8 @@ export class ProductListComponent implements OnInit {
   groupedProducts: { [category: string]: Product[] } = {};
   categories: string[] = [];
   productService = inject(ProductService);
+  constructor(private router: Router) {}
+
 
   ngOnInit() {
     this.productService.getProducts().subscribe(products => {
@@ -46,5 +49,13 @@ export class ProductListComponent implements OnInit {
       acc[product.category].push(product);
       return acc;
     }, {} as { [category: string]: Product[] });
+  }
+
+  onClick(product: Product){
+    if(!product?.productId)
+    {
+      return console.warn('Product id missing');
+    }
+        this.router.navigate(['/products', product.productId]);
   }
 }

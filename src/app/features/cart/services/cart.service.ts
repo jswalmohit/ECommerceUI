@@ -36,7 +36,7 @@ export class CartService {
    * JWT token will be automatically added by authInterceptor
    */
   getCartItems(): Observable<any> {
-    const url = `${environment.apiBaseUrl}/api/Cart/items`;
+    const url = `${environment.apiBaseUrl}/api/Cart/get-cart-items`;
     const headers = new HttpHeaders({
       'CorrelationId': this.generateCorrelationId()
     });
