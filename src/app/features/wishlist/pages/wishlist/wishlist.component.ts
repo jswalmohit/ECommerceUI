@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-wishlist',
   imports: [],
   templateUrl: './wishlist.component.html',
-  styleUrl: './wishlist.component.scss'
+  styleUrls: ['./wishlist.component.scss']
 })
 export class WishlistComponent {
 

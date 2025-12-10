@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent) },
   { path: 'logout', loadComponent: () => import('./features/auth/logout/logout.component').then(m => m.LogoutComponent) },
   { path: 'cart', loadComponent: () => import('./features/cart/pages/cart-page/cart-page.component').then(m => m.CartPageComponent) },
+  { path: 'products/:id', loadComponent: () => import('./features/products/pages/product-detail/product-detail.component').then(m => m.ProductDetailComponent) },
   { path: '**', redirectTo: '' }
 ];
